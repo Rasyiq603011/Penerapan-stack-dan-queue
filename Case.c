@@ -98,49 +98,20 @@ infotype evaluateRPN(Queue operandQueue, Queue operatorQueue) {
     
     infotype temp;
     
-    // Extract operands to stack (in reverse order)
-    while (!IsQueueEmpty(operandQueue)) {
-        DeQueue(&operandQueue, &temp);
-        StackAdd(&operandStack, temp);
-    }
-    
-    // Extract operators to stack (in reverse order)
-    while (!IsQueueEmpty(operatorQueue)) {
-        DeQueue(&operatorQueue, &temp);
-        StackAdd(&operatorStack, temp);
-    }
-    
-    // Create stacks for processing in the correct order
-    Stack processedOperands, processedOperators;
-    CreateStack(&processedOperands);
-    CreateStack(&processedOperators);
-    
-    // Reverse the stacks to get correct order
-    while (!IsStackEmpty(operandStack)) {
-        StackDel(&operandStack, &temp);
-        StackAdd(&processedOperands, temp);
-    }
-    
-    while (!IsStackEmpty(operatorStack)) {
-        StackDel(&operatorStack, &temp);
-        StackAdd(&processedOperators, temp);
-    }
-    
     // Process multiply and divide first
     Stack resultOperands, remainingOperators;
     CreateStack(&resultOperands);
     CreateStack(&remainingOperators);
-    
-    // Add first operand to result stack
-    StackDel(&processedOperands, &temp);
-    StackAdd(&resultOperands, temp);
+
+	DeQueue(&operandQueue, &temp);
+	StackAdd(&resultOperands, temp);
     
     // Process all operators
-    while (!IsStackEmpty(processedOperators)) {
+    while (!IsQueueEmpty(operatorQueue)) {
         // Get next operator and operand
         infotype op, nextOperand;
-        StackDel(&processedOperators, &op);
-        StackDel(&processedOperands, &nextOperand);
+        DeQueue(&operatorQueue, &op);
+        DeQueue(&operandQueue, &nextOperand);
         
         // Handle multiply and divide immediately
         if (op == MULTIPLY || op == DIVIDE) {

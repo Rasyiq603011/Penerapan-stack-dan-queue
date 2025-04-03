@@ -8,21 +8,14 @@ boolean ListEmpty(List L) {
     return (First(L) == Nil);     /* Mengirim true jika List Kosong */
 }
 
-/**** Konstruktor/Kreator List Kosong ****/
 void CreateList(List *L) {
-    /* IS : L sembarang */
-    /* FS : Terbentuk List Kosong */
     First(*L) = Nil;
 }
 
-/**** Manajemen Memory ****/
 address Alokasi(infotype X) {
-    /* Kamus Lokal */
     address P;
-    /* Algoritma */
     P = (address) malloc(sizeof(ElmtList));
     if (P != Nil) {
-        /* Alokasi berhasil */
         info(P) = X;
         next(P) = Nil;
     }
@@ -52,7 +45,6 @@ address Search(List L, infotype X) {
 }
 
 boolean FSearch(List L, address P) {
-    /* Kamus Lokal */
     boolean found = false;
     address PSearch;
     /* Algortima */
